@@ -2,7 +2,9 @@
 
 ## Purpose
 
-Finance app for **individual customers** (end users). Users register, log in, and manage their own accounts and transactions. High-level goals and feature set will be refined with future requirements.
+Finance app for **individual customers** (end users). Users register, log in, and manage their own accounts and transactions. Full feature set and clarified scope are in [legend/features.md](legend/features.md).
+
+**Planned scope:** View all financial data; income/expense; categories and custom expenses (including recurring with placeholders); split tracking between friends; balance per account; budget and charts (MoM, YoY); triggers/automations (including live events); descriptions; Zelle/Venmo manual assignment; two-way IOUs; pay internal accounts and bills; bank/card connections. Build order: DB/schema foundation for all features first, then features by complexity and dependency.
 
 **MVP scope:** No real money; mock data only. A seed script generates relational mock data. Audit logging is required. Staging and production are planned; for now everything runs locally.
 
@@ -70,12 +72,20 @@ Finance app for **individual customers** (end users). Users register, log in, an
 ### Model (relational)
 
 - **Single-tenant:** All users share one database; row-level visibility by `user_id` (or equivalent). No multi-tenant schema separation in MVP.
-- **Core entities:**
+- **Core entities (foundation):** Full schema for all features is designed in Phase 3 (task list). Entities include:
   - **User:** Django’s User (username, email, password hash). One-to-many to Account.
-  - **Account:** Belongs to one User. Typical fields: name, type, currency, balance or derived; add as needed. One-to-many to Transaction.
-  - **Transaction:** Belongs to one Account (and thus one User). Typical fields: amount, date, description, type; add as needed.
+  - **Account:** Belongs to one User. Optional link to Connection (bank/card). Name, type, currency, balance or derived. One-to-many to Transaction.
+  - **Connection:** Bank/card connection (provider, external_id, status). One-to-many to Account.
+  - **Transaction:** Belongs to one Account. Amount, date, description, type (income/expense), optional category. May have TransactionSplits.
+  - **Category:** System or user-defined; type income/expense. Transactions and Budgets reference Category.
+  - **TransactionSplit:** Per-transaction split (participant label, share amount, paid amount). Tracking only; no multi-user accounts.
+  - **Budget:** Per user; optional category; amount, period (e.g. monthly).
+  - **IOU:** Two-way (I owe you / you owe me); counterparty, amount, direction, status, due date.
+  - **Biller:** Payee for “pay a bill” (internal transfer vs pay bill).
+  - **RecurringRule / ScheduledTransaction:** Recurrence and placeholder/scheduled transactions for upcoming view and projections.
+  - **Trigger / TriggerAction:** Automations on conditions (e.g. when/where money lands); actions (move between accounts, pay account). Support live events as well as manual/imported data.
 - **Normalized:** Use FKs; avoid storing redundant user_id on Transaction if it can be inferred from Account. Enforce integrity with migrations and constraints.
-- **Migrations:** Django migrations only; no manual schema changes without a migration.
+- **Migrations:** Django migrations only; no manual schema changes without a migration. See [legend/features.md](legend/features.md) and [legend/task-list.md](legend/task-list.md) Phase 3 for full schema.
 
 ### Compliance and retention
 
@@ -102,8 +112,9 @@ Finance app for **individual customers** (end users). Users register, log in, an
 
 ## Documentation and process
 
+- **Features:** Target features and clarified scope in `legend/features.md`. Build strategy: schema foundation first, then features by complexity and dependency.
 - **Task list:** Phased, high-level tasks in `legend/task-list.md`. Execute in order; complete all tasks in a phase before the next. Acceptance criteria define “done.”
-- **Audience:** Solo developer and AI (e.g. Cursor). Docs should let either resume work without guessing: README (run instructions, env vars, structure), legend/ (overview, task list), and inline comments where behavior is non-obvious.
+- **Audience:** Solo developer and AI (e.g. Cursor). Docs should let either resume work without guessing: README (run instructions, env vars, structure), legend/ (overview, features, task list), and inline comments where behavior is non-obvious.
 - **Updates:** When adding env vars, commands, or structural changes, update README or legend/ so the next session has the full picture.
 
 ---

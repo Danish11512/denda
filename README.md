@@ -11,7 +11,7 @@ Fullstack finance app.
 
 ## Repo structure
 
-- `legend/` — Plans, technical overviews, and high-level documentation. Start with [legend/general-technical-overview.md](legend/general-technical-overview.md) for architecture and stack details.
+- `legend/` — Plans, technical overviews, and high-level documentation. Start with [legend/general-technical-overview.md](legend/general-technical-overview.md) for architecture and stack; [legend/features.md](legend/features.md) for target features and scope; [legend/task-list.md](legend/task-list.md) for phased tasks.
 
 ## Getting started
 

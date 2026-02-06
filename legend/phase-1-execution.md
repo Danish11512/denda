@@ -6,6 +6,12 @@ Execution detail for Phase 1 (Foundation). Reference: [task-list.md](./task-list
 
 ---
 
+## Stack version policy
+
+**Python and Bun/Node:** Use current stable versions compatible with Django and Next.js respectively. Document actual versions in the root README when the scaffold exists (1.1). This file and [general-technical-overview.md](./general-technical-overview.md) state the policy; README lists concrete versions after implementation.
+
+---
+
 ## Stack versions (document in README when implementing)
 
 - **Python:** Use current stable compatible with Django (e.g. 3.12+). Document in README.

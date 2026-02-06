@@ -2,7 +2,7 @@
 
 High-level phases and tasks. Format: phase goal, then tasks with brief acceptance. For human: track progress and scope. For AI: execute in order; complete all tasks in a phase before moving on; verify acceptance before marking done.
 
-Reference: [general-technical-overview.md](./general-technical-overview.md), [features.md](./features.md).
+Reference: [general-technical-overview.md](./general-technical-overview.md), [features.md](./features.md). Phase 1 execution: [phase-1-execution.md](./phase-1-execution.md).
 
 **Build strategy:** Basics and schema always come first (Phases 1–3). Then build features by complexity and dependency; each phase states which features become possible after it (see features.md).
 
@@ -37,6 +37,7 @@ Basics and schema (Phases 1–3) always come first; Phase 3 makes all features i
 
 - [ ] **1.1** Create project structure: monorepo or separate repos for `frontend/` (Next.js) and `backend/` (Django). Document in README.
   - *Acceptance:* Two runnable apps; README states how to run each and that frontend talks to backend.
+  - *Decisions:* Monorepo (`frontend/`, `backend/`). Frontend: Bun; Next.js scaffold includes shadcn/ui. Backend: Django (SQLite for 1.1 so runnable without PostgreSQL). Root README only. Execution: [phase-1-execution.md](./phase-1-execution.md).
 - [ ] **1.2** Stand up PostgreSQL locally; document connection (e.g. `DATABASE_URL` or individual vars). Create app DB.
   - *Acceptance:* Django can connect; doc shows how to create DB and connect.
 - [ ] **1.3** Django project with one app (e.g. `core` or `finance`). Install GraphQL lib (e.g. Graphene-Django or Strawberry). Single query (e.g. `ping` or `health`) exposed.

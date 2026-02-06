@@ -16,7 +16,7 @@ Finance app for **individual customers** (end users). Users register, log in, an
 - **Backend**: Django — GraphQL API, business logic, validation, and persistence via PostgreSQL.
 - **Database**: PostgreSQL — primary datastore. Single-tenant; normalized relational model. All persistent data lives in PostgreSQL.
 
-**Layers:** Next.js talks to Django over HTTP (single GraphQL endpoint). Django talks to PostgreSQL. No shared codebase between frontend and backend. Frontend and backend are in the same repo (e.g. `frontend/`, `backend/`) or split; see task list Phase 1.
+**Layers:** Next.js talks to Django over HTTP (single GraphQL endpoint). Django talks to PostgreSQL. No shared codebase between frontend and backend. **Repo structure:** Monorepo with `frontend/` (Next.js) and `backend/` (Django). See [task-list.md](task-list.md) Phase 1 and [phase-1-execution.md](phase-1-execution.md) for execution details.
 
 ---
 
@@ -24,7 +24,7 @@ Finance app for **individual customers** (end users). Users register, log in, an
 
 ### Stack and tooling
 
-- **Framework:** Next.js, App Router. Use current LTS Node; document version in README.
+- **Framework:** Next.js, App Router. **Package manager / runtime:** Bun. Document Bun and Node version (Bun embeds Node) in README; use current stable compatible with Next.js.
 - **UI:** shadcn/ui (React components, Tailwind). Target desktop and mobile; responsive from the start.
 - **GraphQL client:** Use a client that supports cookies (e.g. Apollo Client, urql, or `fetch` with `credentials: 'include'`) so Django session cookies are sent. Single GraphQL endpoint (e.g. `NEXT_PUBLIC_GRAPHQL_URL` or `NEXT_PUBLIC_API_URL`).
 

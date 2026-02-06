@@ -17,12 +17,30 @@ Fullstack finance app.
 ## Repo structure
 
 - `frontend/` — Next.js (App Router, TypeScript, Tailwind, shadcn/ui). Run with Bun.
-- `backend/` — Django. SQLite for 1.1; PostgreSQL in 1.2.
+- `backend/` — Django. PostgreSQL (see Database below).
 - `legend/` — Plans, technical overviews, and high-level documentation. Start with [legend/general-technical-overview.md](legend/general-technical-overview.md) for architecture and stack; [legend/features.md](legend/features.md) for target features and scope; [legend/task-list.md](legend/task-list.md) for phased tasks.
 
 ## Getting started
 
-No environment variables are required for 1.1.
+**Database (PostgreSQL)**
+
+The backend requires PostgreSQL. Install it locally (e.g. [PostgreSQL downloads](https://www.postgresql.org/download/) or your package manager). Create the app database and set `DATABASE_URL`:
+
+```bash
+createdb denda
+```
+
+Set the connection URL (e.g. in `backend/.env` or your environment):
+
+```bash
+export DATABASE_URL=postgres://your_user:your_password@localhost:5432/denda
+```
+
+Then run migrations:
+
+```bash
+cd backend && python manage.py migrate
+```
 
 **Backend (Django)**
 
@@ -30,7 +48,7 @@ No environment variables are required for 1.1.
 cd backend && python manage.py runserver
 ```
 
-Server runs at http://127.0.0.1:8000/ (or the port shown).
+Server runs at http://127.0.0.1:8000/ (or the port shown). Requires `DATABASE_URL` to be set.
 
 **Frontend (Next.js)**
 

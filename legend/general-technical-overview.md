@@ -69,7 +69,8 @@ Finance app for **individual customers** (end users). Users register, log in, an
 ### Stack and hosting
 
 - **Engine:** PostgreSQL (psql). Self-hosted; single instance under your control. Document version and how to create the DB (e.g. `createdb denda` or script).
-- **Connection:** Django connects via `DATABASE_URL` or individual vars (`DB_NAME`, `DB_USER`, `DB_PASSWORD`, `DB_HOST`, `DB_PORT`). No direct frontend access.
+- **Connection:** Django connects via `DATABASE_URL` (e.g. `postgres://user:pass@localhost:5432/denda`). No SQLite fallback; backend requires PostgreSQL. No direct frontend access.
+- **Local run:** App database name is `denda`. Install PostgreSQL, create the DB with `createdb denda`, set `DATABASE_URL` in env or `backend/.env`, then run `python manage.py migrate`. Step-by-step is in the root README.
 
 ### Model (relational)
 

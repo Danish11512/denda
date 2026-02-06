@@ -10,10 +10,39 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
+import os
 from pathlib import Path
+from urllib.parse import urlparse, unquote
+
+from django.core.exceptions import ImproperlyConfigured
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+
+def _parse_database_url(url: str) -> dict:
+    parsed = urlparse(url)
+    if parsed.scheme not in ('postgres', 'postgresql'):
+        raise ImproperlyConfigured('DATABASE_URL must use postgres:// or postgresql://')
+    path = parsed.path.lstrip('/')
+    if not path:
+        raise ImproperlyConfigured('DATABASE_URL must include database name')
+    netloc = parsed.netloc
+    if '@' not in netloc:
+        raise ImproperlyConfigured('DATABASE_URL must include user (and optionally password)')
+    userinfo, hostport = netloc.rsplit('@', 1)
+    user, _, raw_password = userinfo.partition(':')
+    password = unquote(raw_password) if raw_password else ''
+    host, _, port = hostport.partition(':')
+    port = port or '5432'
+    return {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': path,
+        'USER': unquote(user),
+        'PASSWORD': password,
+        'HOST': host or 'localhost',
+        'PORT': port,
+    }
 
 
 # Quick-start development settings - unsuitable for production
@@ -74,11 +103,14 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
+_database_url = os.environ.get('DATABASE_URL')
+if not _database_url:
+    raise ImproperlyConfigured(
+        'DATABASE_URL is required (PostgreSQL). Create DB with e.g. createdb denda, '
+        'then set DATABASE_URL=postgres://user:pass@localhost:5432/denda in .env or environment.'
+    )
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+    'default': _parse_database_url(_database_url),
 }
 
 

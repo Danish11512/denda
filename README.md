@@ -44,6 +44,16 @@ cd backend && python manage.py migrate
 
 **Backend (Django)**
 
+Before working on the backend, run the dev environment script so the venv, dependencies, and env (e.g. `DATABASE_URL`) are ready:
+
+```bash
+./backend/scripts/ensure-venv.sh
+```
+
+Inside the spawned shell you can run `python manage.py runserver` or `python manage.py migrate`. Exiting that shell removes the venv and any temp artifacts.
+
+To run the server without the script (e.g. you already have a venv and env set):
+
 ```bash
 cd backend && python manage.py runserver
 ```

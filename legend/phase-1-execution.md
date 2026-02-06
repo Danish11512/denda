@@ -36,19 +36,24 @@ Execution detail for Phase 1 (Foundation). Reference: [task-list.md](./task-list
    - Use SQLite for 1.1 so `python manage.py runserver` starts without DB setup; 1.2 will add PostgreSQL and connection docs.
    - Verify: from repo root, `cd backend && python manage.py runserver` runs and server responds.
 
-3. **Create frontend (Next.js + Bun + shadcn)**  
+3. **Backend dev environment script**  
+   - Create a script (e.g. `backend/scripts/ensure-venv.sh` or `scripts/backend-venv.sh`) that is run **before any backend work**. On each run it: creates a fresh venv (or uses existing), installs all dependencies from `backend/requirements.txt`, and loads/sources env so all required keys (e.g. `DATABASE_URL`, `SECRET_KEY`) are set and ready. Document in README: run this script first when working on the backend.
+   - **On cancel (SIGINT / script exit on failure / explicit cleanup):** destroy the venv and any other temporary artifacts created by the script (e.g. temp dirs, generated env files if any). No persistent venv or temp state left behind after cancel.
+   - Verify: running the script leaves backend ready to use (`python manage.py runserver` or `migrate` works with env in place); cancel or cleanup removes venv and temp files.
+
+4. **Create frontend (Next.js + Bun + shadcn)**  
    - Create `frontend/` with Next.js App Router via Bun (e.g. `bunx create-next-app` with App Router, TypeScript, Tailwind).
    - Install and configure shadcn/ui (init + at least one component so the setup is in place for 1.4).
    - Verify: from repo root, `cd frontend && bun run dev` runs and app loads in browser.
 
-4. **Update root README**  
+5. **Update root README**  
    - Add "Repo structure" entry: `frontend/` (Next.js), `backend/` (Django).
-   - Add "Getting started" (or equivalent): how to run backend, how to run frontend, required env (if any for 1.1).
+   - Add "Getting started" (or equivalent): how to run backend, how to run frontend, required env (if any for 1.1). Include: run the backend dev environment script before backend work so venv and env are ready.
    - State explicitly that the frontend talks to the backend (HTTP/GraphQL once 1.3 is done).
    - Keep existing stack and legend references; update in place.
 
-5. **Update legend docs**  
-   - general-technical-overview: Monorepo (`frontend/`, `backend/`); frontend uses Bun; document Node/Bun and Python versions in README.
+6. **Update legend docs**  
+   - general-technical-overview: Monorepo (`frontend/`, `backend/`); frontend uses Bun; document Node/Bun and Python versions in README. Note that backend work requires running the dev environment script first (venv + deps + env); on cancel, script cleans up venv and temp artifacts.
    - task-list: Note under Phase 1 or 1.1 that structure is monorepo and frontend uses Bun; link to this execution plan if useful.
 
 ---
@@ -93,5 +98,12 @@ Django: one app, GraphQL lib, single query (e.g. `ping`/`health`). Acceptance: `
 Next.js: env for backend URL; one page that calls Django GraphQL (e.g. health) and displays result. shadcn already in place from 1.1.
 
 ---
+
+## Completion verification (1.1 and 1.2)
+
+Verified 2025-02-06. All sub-tasks through 1.2.5 are implemented and documented.
+
+- **1.1:** Stack versions in this file, general-technical-overview, README. Backend: `backend/` with `config/`, `core/`, `manage.py`. Dev script: `backend/scripts/ensure-venv.sh` (venv + deps + env; cleanup on exit). Frontend: `frontend/` with Next.js, shadcn/ui. README: repo structure, Getting started (Database, Backend with script, Frontend), frontend talks to backend. Legend: general-technical-overview has dev script note; task-list has 1.1 decisions and link.
+- **1.2:** general-technical-overview has PostgreSQL (local) note. requirements.txt has psycopg2-binary; settings.py requires DATABASE_URL, urllib.parse, ImproperlyConfigured. README: Database subsection (install, createdb denda, DATABASE_URL, migrate). Legend: Data (PostgreSQL) and README step-by-step. No SQLite; `backend/db.sqlite3` removed.
 
 Last updated: 2025-02-06

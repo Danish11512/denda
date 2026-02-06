@@ -37,7 +37,7 @@ Basics and schema (Phases 1–3) always come first; Phase 3 makes all features i
 
 - [ ] **1.1** Create project structure: monorepo or separate repos for `frontend/` (Next.js) and `backend/` (Django). Document in README.
   - *Acceptance:* Two runnable apps; README states how to run each and that frontend talks to backend.
-  - *Decisions:* Monorepo (`frontend/`, `backend/`). Frontend: Bun; Next.js scaffold includes shadcn/ui. Backend: Django (SQLite for 1.1 so runnable without PostgreSQL). Root README only. Execution: [phase-1-execution.md](./phase-1-execution.md).
+  - *Decisions:* Monorepo (`frontend/`, `backend/`). Frontend: Bun; Next.js scaffold includes shadcn/ui. Backend: Django (SQLite for 1.1 so runnable without PostgreSQL). Root README only. Backend dev: run the dev environment script before any backend work (creates venv on each run, installs deps, loads env); on cancel the script destroys venv and temp artifacts. Execution: [phase-1-execution.md](./phase-1-execution.md).
 - [ ] **1.2** Stand up PostgreSQL locally; document connection (e.g. `DATABASE_URL` or individual vars). Create app DB.
   - *Acceptance:* Django can connect; doc shows how to create DB and connect.
 - [ ] **1.3** Django project with one app (e.g. `core` or `finance`). Install GraphQL lib (e.g. Graphene-Django or Strawberry). Single query (e.g. `ping` or `health`) exposed.

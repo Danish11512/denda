@@ -61,6 +61,7 @@ Finance app for **individual customers** (end users). Users register, log in, an
 ### Structure
 
 - Project root: `manage.py`, `config/` or `<project_name>/` for settings, URLs, ASGI/WSGI. One app for finance domain. Migrations in the app. Env: `DATABASE_URL`, `SECRET_KEY`, `ALLOWED_HOSTS`, `CORS_ALLOWED_ORIGINS` (or equivalent). Document all required env vars.
+- **Local development:** Before any backend work, run the dev environment script (`backend/scripts/ensure-venv.sh`). It creates a venv, installs dependencies, and loads env; the script spawns a shell with venv and env ready. On cancel or exit of that shell, the script removes the venv and any temporary artifacts.
 
 ---
 

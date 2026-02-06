@@ -18,7 +18,7 @@ Finance app for **individual customers** (end users). Users register, log in, an
 
 **Layers:** Next.js talks to Django over HTTP (single GraphQL endpoint). Django talks to PostgreSQL. No shared codebase between frontend and backend. **Repo structure:** Monorepo with `frontend/` (Next.js) and `backend/` (Django). See [task-list.md](task-list.md) Phase 1 and [phase-1-execution.md](phase-1-execution.md) for execution details.
 
-**Stack version policy:** Python and Bun/Node — use current stable versions compatible with Django and Next.js. Document actual versions in the root README when the scaffold exists (Phase 1.1). Policy is recorded in [phase-1-execution.md](phase-1-execution.md); README will list concrete versions after implementation.
+**Stack version policy:** Python and Bun/Node — use current stable versions compatible with Django and Next.js. Concrete versions are listed in the root README. Policy is recorded in [phase-1-execution.md](phase-1-execution.md).
 
 ---
 

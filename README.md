@@ -9,6 +9,11 @@ Fullstack finance app.
 - **Database**: PostgreSQL
 - **Deployment**: Self-hosted
 
+**Versions (documented at scaffold; see also legend/phase-1-execution.md):**
+
+- **Python:** 3.12+ (backend). See `backend/requirements.txt` for Django.
+- **Bun / Node:** Bun current stable (frontend; Bun embeds Node). See `frontend/package.json` for Next.js and dependencies.
+
 ## Repo structure
 
 - `frontend/` — Next.js (App Router, TypeScript, Tailwind, shadcn/ui). Run with Bun.

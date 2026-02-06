@@ -66,6 +66,8 @@ Finance app for **individual customers** (end users). Users register, log in, an
 
 ## Data (PostgreSQL)
 
+**PostgreSQL (local):** App DB name `denda`. Connection via `DATABASE_URL`. Step-by-step (create DB, set env, run migrations) is in the root README.
+
 ### Stack and hosting
 
 - **Engine:** PostgreSQL (psql). Self-hosted; single instance under your control. Document version and how to create the DB (e.g. `createdb denda` or script).
@@ -122,4 +124,4 @@ Finance app for **individual customers** (end users). Users register, log in, an
 
 ---
 
-Last updated: 2025-02-05
+Last updated: 2025-02-06
